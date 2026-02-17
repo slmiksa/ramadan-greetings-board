@@ -4,33 +4,33 @@ import { motion } from "framer-motion";
 import { getMessages, RamadanMessage } from "@/lib/messages";
 
 const pastelColors = [
-  "from-primary/20 to-gold-light/10 border-primary/30",
-  "from-gold-light/20 to-primary/10 border-gold-light/30",
-  "from-primary/15 to-gold-dark/10 border-primary/25",
-  "from-gold-dark/15 to-primary/10 border-gold-dark/25",
-];
+"from-primary/20 to-gold-light/10 border-primary/30",
+"from-gold-light/20 to-primary/10 border-gold-light/30",
+"from-primary/15 to-gold-dark/10 border-primary/25",
+"from-gold-dark/15 to-primary/10 border-gold-dark/25"];
 
-const MessageCard = ({ msg, index }: { msg: RamadanMessage; index: number }) => {
+
+const MessageCard = ({ msg, index }: {msg: RamadanMessage;index: number;}) => {
   const colorClass = pastelColors[index % pastelColors.length];
-  const floatDuration = 4 + (index % 3) * 1.5;
-  const floatDelay = (index % 5) * 0.6;
+  const floatDuration = 4 + index % 3 * 1.5;
+  const floatDelay = index % 5 * 0.6;
 
   return (
     <motion.div
       initial={{ opacity: 0, y: 40, scale: 0.9 }}
       animate={{ opacity: 1, y: 0, scale: 1 }}
       transition={{ delay: index * 0.08, type: "spring", damping: 20 }}
-      className={`rounded-2xl bg-gradient-to-br ${colorClass} border p-5 card-float backdrop-blur-sm`}
-    >
+      className={`rounded-2xl bg-gradient-to-br ${colorClass} border p-5 card-float backdrop-blur-sm`}>
+
       <motion.div
         animate={{ y: [0, -6, 0] }}
         transition={{
           duration: floatDuration,
           repeat: Infinity,
           ease: "easeInOut",
-          delay: floatDelay,
-        }}
-      >
+          delay: floatDelay
+        }}>
+
         <p className="text-foreground text-base leading-relaxed mb-3">
           "{msg.message}"
         </p>
@@ -42,8 +42,8 @@ const MessageCard = ({ msg, index }: { msg: RamadanMessage; index: number }) => 
           <span className="text-xs text-muted-foreground mr-auto">🌙</span>
         </div>
       </motion.div>
-    </motion.div>
-  );
+    </motion.div>);
+
 };
 
 const MessagesPage = () => {
@@ -56,31 +56,31 @@ const MessagesPage = () => {
   return (
     <div className="min-h-screen bg-background">
       {/* Header */}
-      <div className="bg-night-gradient py-8 px-4 text-center">
+      <div className="bg-night-gradient py-8 px-4 text-center bg-[#967b3c]">
         <motion.h1
           className="text-3xl md:text-4xl font-black text-cream mb-2"
           initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-        >
+          animate={{ opacity: 1, y: 0 }}>
+
           بورد المشاعر 🌙
         </motion.h1>
         <motion.p
           className="text-cream/60 text-sm mb-4"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 0.2 }}
-        >
+          transition={{ delay: 0.2 }}>
+
           رسائل الموظفين بمناسبة شهر رمضان المبارك
         </motion.p>
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 0.3 }}
-        >
+          transition={{ delay: 0.3 }}>
+
           <Link
             to="/"
-            className="inline-block rounded-xl bg-primary/20 border border-cream/20 px-6 py-2 text-sm font-medium text-cream hover:bg-primary/30 transition-colors"
-          >
+            className="inline-block rounded-xl bg-primary/20 border border-cream/20 px-6 py-2 text-sm font-medium text-cream hover:bg-primary/30 transition-colors">
+
             ← العودة للرئيسية
           </Link>
         </motion.div>
@@ -88,12 +88,12 @@ const MessagesPage = () => {
 
       {/* Messages Grid */}
       <div className="max-w-6xl mx-auto px-4 py-10">
-        {messages.length === 0 ? (
-          <motion.div
-            className="text-center py-20"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-          >
+        {messages.length === 0 ?
+        <motion.div
+          className="text-center py-20"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}>
+
             <p className="text-6xl mb-4">🌙</p>
             <p className="text-xl text-muted-foreground font-medium">
               لا توجد رسائل بعد
@@ -102,22 +102,22 @@ const MessagesPage = () => {
               كن أول من يشارك مشاعره!
             </p>
             <Link
-              to="/"
-              className="inline-block mt-6 rounded-xl bg-primary px-6 py-3 font-bold text-primary-foreground hover:opacity-90 transition-opacity"
-            >
+            to="/"
+            className="inline-block mt-6 rounded-xl bg-primary px-6 py-3 font-bold text-primary-foreground hover:opacity-90 transition-opacity">
+
               شاركنا مشاعرك
             </Link>
-          </motion.div>
-        ) : (
-          <div className="columns-1 sm:columns-2 lg:columns-3 gap-4 space-y-4">
-            {messages.map((msg, i) => (
-              <MessageCard key={msg.id} msg={msg} index={i} />
-            ))}
+          </motion.div> :
+
+        <div className="columns-1 sm:columns-2 lg:columns-3 gap-4 space-y-4">
+            {messages.map((msg, i) =>
+          <MessageCard key={msg.id} msg={msg} index={i} />
+          )}
           </div>
-        )}
+        }
       </div>
-    </div>
-  );
+    </div>);
+
 };
 
 export default MessagesPage;
