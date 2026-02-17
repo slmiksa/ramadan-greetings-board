@@ -57,13 +57,13 @@ const MessagesPage = () => {
     <div className="min-h-screen bg-background">
       {/* Header */}
       <div className="bg-night-gradient py-8 px-4 text-center bg-[#967b3c]">
-        <motion.h1
-          className="text-3xl md:text-4xl font-black text-cream mb-2"
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}>
+        
 
-          بورد المشاعر 🌙
-        </motion.h1>
+
+
+
+
+
         <motion.p
           className="text-cream/60 text-sm mb-4"
           initial={{ opacity: 0 }}
