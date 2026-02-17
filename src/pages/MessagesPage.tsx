@@ -56,35 +56,35 @@ const MessagesPage = () => {
   return (
     <div className="min-h-screen bg-background">
       {/* Header */}
-      <div className="bg-night-gradient py-8 px-4 text-center bg-[#967b3c]">
-        
+      
 
 
 
 
 
 
-        <motion.p
-          className="text-cream/60 text-sm mb-4"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.2 }}>
 
-          رسائل الموظفين بمناسبة شهر رمضان المبارك
-        </motion.p>
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.3 }}>
 
-          <Link
-            to="/"
-            className="inline-block rounded-xl bg-primary/20 border border-cream/20 px-6 py-2 text-sm font-medium text-cream hover:bg-primary/30 transition-colors">
 
-            ← العودة للرئيسية
-          </Link>
-        </motion.div>
-      </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
       {/* Messages Grid */}
       <div className="max-w-6xl mx-auto px-4 py-10">
