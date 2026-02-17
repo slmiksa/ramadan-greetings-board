@@ -22,7 +22,7 @@ const Index = () => {
 
       {/* Title */}
       <motion.h1
-        className="text-4xl md:text-6xl font-black text-gold-dark mb-3"
+        className="text-4xl md:text-6xl font-black mb-3 bg-transparent text-[#ab9154]"
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.5, duration: 0.8 }}>
