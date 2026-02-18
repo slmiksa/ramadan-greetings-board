@@ -60,12 +60,12 @@ const MessagesPage = () => {
       <div className="text-center py-8">
         <h1 className="text-3xl font-bold text-gold-dark mb-2">بورد المشاعر ✨</h1>
         <p className="text-muted-foreground text-sm">مشاعر الموظفين بمناسبة شهر رمضان المبارك</p>
-        <Link
-          to="/"
-          className="inline-block mt-4 text-sm text-primary hover:underline">
+        
 
-          ← العودة للرئيسية
-        </Link>
+
+
+
+
       </div>
 
       {/* Messages Grid */}
