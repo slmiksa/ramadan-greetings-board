@@ -1,13 +1,24 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import { getMessages, approveMessage, rejectMessage, RamadanMessage } from "@/lib/messages";
+import { getAdminMessages, approveMessage, rejectMessage, RamadanMessage } from "@/lib/messages";
 import { toast } from "sonner";
 
 const AdminPage = () => {
   const [messages, setMessages] = useState<RamadanMessage[]>([]);
+  const [loading, setLoading] = useState(true);
 
-  const refresh = () => setMessages(getMessages());
+  const refresh = async () => {
+    try {
+      const data = await getAdminMessages();
+      setMessages(data);
+    } catch (e) {
+      console.error(e);
+      toast.error("خطأ في تحميل الرسائل");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
     refresh();
@@ -16,38 +27,49 @@ const AdminPage = () => {
   const pending = messages.filter((m) => !m.approved);
   const approved = messages.filter((m) => m.approved);
 
-  const handleApprove = (id: string) => {
-    approveMessage(id);
-    toast.success("تم قبول الرسالة ✅");
-    refresh();
+  const handleApprove = async (id: string) => {
+    try {
+      await approveMessage(id);
+      toast.success("تم قبول الرسالة ✅");
+      refresh();
+    } catch {
+      toast.error("خطأ في قبول الرسالة");
+    }
   };
 
-  const handleReject = (id: string) => {
-    rejectMessage(id);
-    toast.success("تم حذف الرسالة 🗑️");
-    refresh();
+  const handleReject = async (id: string) => {
+    try {
+      await rejectMessage(id);
+      toast.success("تم حذف الرسالة 🗑️");
+      refresh();
+    } catch {
+      toast.error("خطأ في حذف الرسالة");
+    }
   };
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-cream flex items-center justify-center">
+        <p className="text-muted-foreground">جاري التحميل...</p>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-cream" dir="rtl">
-      {/* Header */}
       <div className="bg-background border-b border-border">
         <div className="max-w-5xl mx-auto px-4 py-6 flex items-center justify-between">
           <div>
             <h1 className="text-2xl font-bold text-gold-dark">لوحة التحكم</h1>
             <p className="text-sm text-muted-foreground">إدارة رسائل الموظفين</p>
           </div>
-          <Link
-            to="/"
-            className="text-sm text-primary hover:underline"
-          >
+          <Link to="/" className="text-sm text-primary hover:underline">
             العودة للرئيسية ←
           </Link>
         </div>
       </div>
 
       <div className="max-w-5xl mx-auto px-4 py-8 space-y-10">
-        {/* Pending */}
         <section>
           <h2 className="text-lg font-bold text-foreground mb-4">
             بانتظار الموافقة ({pending.length})
@@ -73,7 +95,7 @@ const AdminPage = () => {
                       <p className="font-semibold text-foreground text-sm">{msg.name}</p>
                       <p className="text-foreground/80 text-sm mt-1 leading-relaxed">"{msg.message}"</p>
                       <p className="text-xs text-muted-foreground mt-1">
-                        {new Date(msg.timestamp).toLocaleDateString("ar-SA")}
+                        {new Date(msg.created_at).toLocaleDateString("ar-SA")}
                       </p>
                     </div>
                     <div className="flex gap-2 shrink-0">
@@ -97,7 +119,6 @@ const AdminPage = () => {
           )}
         </section>
 
-        {/* Approved */}
         <section>
           <h2 className="text-lg font-bold text-foreground mb-4">
             الرسائل المقبولة ({approved.length})
