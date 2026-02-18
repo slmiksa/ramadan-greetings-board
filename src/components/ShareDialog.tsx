@@ -13,18 +13,21 @@ const ShareDialog = ({ open, onClose }: ShareDialogProps) => {
   const [message, setMessage] = useState("");
   const [sending, setSending] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!name.trim() || !message.trim()) return;
     setSending(true);
-    setTimeout(() => {
-      addMessage(name.trim(), message.trim());
+    try {
+      await addMessage(name.trim(), message.trim());
       toast.success("تم إرسال رسالتك بنجاح! ✨");
       setName("");
       setMessage("");
-      setSending(false);
       onClose();
-    }, 500);
+    } catch {
+      toast.error("خطأ في إرسال الرسالة");
+    } finally {
+      setSending(false);
+    }
   };
 
   return (

@@ -1,46 +1,55 @@
+import { supabase } from "@/integrations/supabase/client";
+
 export interface RamadanMessage {
   id: string;
   name: string;
   message: string;
-  timestamp: number;
+  created_at: string;
   approved: boolean;
 }
 
-const STORAGE_KEY = "ramadan-messages";
+export const getApprovedMessages = async (): Promise<RamadanMessage[]> => {
+  const { data, error } = await supabase
+    .from("messages")
+    .select("*")
+    .eq("approved", true)
+    .order("created_at", { ascending: false });
 
-export const getMessages = (): RamadanMessage[] => {
-  const data = localStorage.getItem(STORAGE_KEY);
-  return data ? JSON.parse(data) : [];
+  if (error) throw error;
+  return (data as unknown as RamadanMessage[]) || [];
 };
 
-export const getApprovedMessages = (): RamadanMessage[] => {
-  return getMessages().filter((m) => m.approved);
+export const addMessage = async (name: string, message: string): Promise<void> => {
+  const { error } = await supabase
+    .from("messages")
+    .insert({ name, message });
+
+  if (error) throw error;
 };
 
-export const addMessage = (name: string, message: string): RamadanMessage => {
-  const messages = getMessages();
-  const newMsg: RamadanMessage = {
-    id: crypto.randomUUID(),
-    name,
-    message,
-    timestamp: Date.now(),
-    approved: false,
-  };
-  messages.push(newMsg);
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(messages));
-  return newMsg;
+export const getAdminMessages = async (): Promise<RamadanMessage[]> => {
+  const res = await fetch(
+    `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/admin-messages?action=list`,
+    {
+      headers: {
+        apikey: import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY,
+      },
+    }
+  );
+  if (!res.ok) throw new Error("Failed to fetch messages");
+  return res.json();
 };
 
-export const approveMessage = (id: string): void => {
-  const messages = getMessages();
-  const msg = messages.find((m) => m.id === id);
-  if (msg) {
-    msg.approved = true;
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(messages));
-  }
+export const approveMessage = async (id: string): Promise<void> => {
+  const { error } = await supabase.functions.invoke("admin-messages", {
+    body: { id, action: "approve" },
+  });
+  if (error) throw error;
 };
 
-export const rejectMessage = (id: string): void => {
-  const messages = getMessages().filter((m) => m.id !== id);
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(messages));
+export const rejectMessage = async (id: string): Promise<void> => {
+  const { error } = await supabase.functions.invoke("admin-messages", {
+    body: { id, action: "reject" },
+  });
+  if (error) throw error;
 };
