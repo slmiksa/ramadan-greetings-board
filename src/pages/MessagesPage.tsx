@@ -58,7 +58,7 @@ const MessagesPage = () => {
     <div className="min-h-screen bg-cream">
       {/* Header */}
       <div className="text-center py-8">
-        <h1 className="text-3xl font-bold text-gold-dark mb-2">بورد المشاعر ✨</h1>
+        <h1 className="text-3xl font-bold text-gold-dark mb-2">بورد المشاعر </h1>
         <p className="text-muted-foreground text-sm">مشاعر الموظفين بمناسبة شهر رمضان المبارك</p>
         
 
