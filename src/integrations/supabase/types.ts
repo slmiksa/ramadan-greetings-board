@@ -43,7 +43,24 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      approve_message: { Args: { message_id: string }; Returns: undefined }
+      get_all_messages: {
+        Args: never
+        Returns: {
+          approved: boolean
+          created_at: string
+          id: string
+          message: string
+          name: string
+        }[]
+        SetofOptions: {
+          from: "*"
+          to: "messages"
+          isOneToOne: false
+          isSetofReturn: true
+        }
+      }
+      reject_message: { Args: { message_id: string }; Returns: undefined }
     }
     Enums: {
       [_ in never]: never

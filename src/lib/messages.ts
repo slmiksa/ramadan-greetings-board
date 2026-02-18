@@ -22,34 +22,23 @@ export const getApprovedMessages = async (): Promise<RamadanMessage[]> => {
 export const addMessage = async (name: string, message: string): Promise<void> => {
   const { error } = await supabase
     .from("messages")
-    .insert({ name, message });
+    .insert({ name, message } as any);
 
   if (error) throw error;
 };
 
 export const getAdminMessages = async (): Promise<RamadanMessage[]> => {
-  const res = await fetch(
-    `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/admin-messages?action=list`,
-    {
-      headers: {
-        apikey: import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY,
-      },
-    }
-  );
-  if (!res.ok) throw new Error("Failed to fetch messages");
-  return res.json();
+  const { data, error } = await supabase.rpc("get_all_messages") as { data: any; error: any };
+  if (error) throw error;
+  return (data as RamadanMessage[]) || [];
 };
 
 export const approveMessage = async (id: string): Promise<void> => {
-  const { error } = await supabase.functions.invoke("admin-messages", {
-    body: { id, action: "approve" },
-  });
+  const { error } = await supabase.rpc("approve_message", { message_id: id } as any);
   if (error) throw error;
 };
 
 export const rejectMessage = async (id: string): Promise<void> => {
-  const { error } = await supabase.functions.invoke("admin-messages", {
-    body: { id, action: "reject" },
-  });
+  const { error } = await supabase.rpc("reject_message", { message_id: id } as any);
   if (error) throw error;
 };
