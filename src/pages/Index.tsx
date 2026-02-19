@@ -12,12 +12,12 @@ const Index = () => {
     <div className="min-h-screen bg-cream flex flex-col items-center justify-center px-4 text-center">
       {/* Logo */}
       <motion.img
-        src={logo}
+
         alt="شركة الوصل الوطنية"
         className="w-28 h-28 md:w-36 md:h-36 object-contain mb-6"
         initial={{ scale: 0, rotate: -180 }}
         animate={{ scale: 1, rotate: 0 }}
-        transition={{ type: "spring", damping: 15, stiffness: 100, delay: 0.2 }} />
+        transition={{ type: "spring", damping: 15, stiffness: 100, delay: 0.2 }} src="/lovable-uploads/ed1f8f12-08d8-4ab8-a787-1527f15b4a6a.png" />
 
 
       {/* Title */}
