@@ -14,7 +14,7 @@ const Index = () => {
       <motion.img
 
         alt="شركة الوصل الوطنية"
-        className="w-56 h-56 md:w-72 md:h-72 object-contain mb-6"
+        className="w-56 h-56 md:w-72 md:h-72 object-contain mb-2"
         initial={{ scale: 0, rotate: -180 }}
         animate={{ scale: 1, rotate: 0 }}
         transition={{ type: "spring", damping: 15, stiffness: 100, delay: 0.2 }} src="/lovable-uploads/ed1f8f12-08d8-4ab8-a787-1527f15b4a6a.png" />
