@@ -32,7 +32,7 @@ const MessageCard = ({ msg, index }: {msg: RamadanMessage;index: number;}) => {
         }}
         className={`rounded-2xl bg-gradient-to-br ${colorClass} border p-5 backdrop-blur-sm`}>
 
-        <p className="text-foreground text-base leading-relaxed mb-3" dir="rtl">
+        <p className="text-foreground leading-relaxed mb-3 text-2xl" dir="rtl">
           "{msg.message}"
         </p>
         <div className="flex items-center gap-2 justify-end" dir="rtl">
