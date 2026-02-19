@@ -66,7 +66,7 @@ const Index = () => {
           to="/messages"
           className="rounded-2xl border-2 border-gold/30 bg-gold/10 px-8 py-4 text-lg font-bold text-gold-dark hover:bg-gold/20 transition-colors">
 
-          بورد المشاعر ✨
+           لوحة  المشاعر 
         </Link>
       </motion.div>
 
