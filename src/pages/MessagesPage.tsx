@@ -51,7 +51,7 @@ const MessagesPage = () => {
   const [messages, setMessages] = useState<RamadanMessage[]>([]);
 
   useEffect(() => {
-    setMessages(getApprovedMessages());
+    getApprovedMessages().then(setMessages).catch(console.error);
   }, []);
 
   return (
