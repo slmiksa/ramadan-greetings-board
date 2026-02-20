@@ -2,6 +2,7 @@ import { useEffect, useState, useCallback } from "react";
 import { Link } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { getApprovedMessages, RamadanMessage } from "@/lib/messages";
+import RamadanDecorations from "@/components/RamadanDecorations";
 
 const ITEMS_PER_PAGE = 12;
 const AUTO_ADVANCE_MS = 20000;
@@ -81,7 +82,8 @@ const MessagesPage = () => {
   }, [currentPage, totalPages]);
 
   return (
-    <div className="min-h-screen bg-cream">
+    <div className="min-h-screen bg-cream relative">
+      <RamadanDecorations />
       {/* Header */}
       <div className="text-center py-8">
         <h1 className="text-3xl font-bold text-gold-dark mb-2">لوحة المشاعر</h1>
