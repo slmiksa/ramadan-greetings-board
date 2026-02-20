@@ -39,6 +39,66 @@ const Index = () => {
 
       <RamadanDecorations />
       <div className="min-h-screen bg-cream flex flex-col items-center justify-center px-4 text-center relative">
+        {/* Top center Ramadan header decoration */}
+        <motion.div
+          className="absolute top-4 left-1/2 -translate-x-1/2 flex items-center gap-3 z-20"
+          initial={{ opacity: 0, y: -30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.3, duration: 1, ease: "easeOut" }}
+        >
+          {/* Left star */}
+          <motion.svg
+            width="18" height="18" viewBox="0 0 24 24" fill="#977C3C" opacity={0.5}
+            animate={{ rotate: 360, scale: [1, 1.2, 1] }}
+            transition={{ rotate: { duration: 12, repeat: Infinity, ease: "linear" }, scale: { duration: 3, repeat: Infinity } }}
+          >
+            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+          </motion.svg>
+
+          {/* Small star */}
+          <motion.svg
+            width="10" height="10" viewBox="0 0 24 24" fill="#c4a84d" opacity={0.4}
+            animate={{ scale: [1, 1.4, 1] }}
+            transition={{ duration: 2, repeat: Infinity, delay: 0.5 }}
+          >
+            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+          </motion.svg>
+
+          {/* Crescent moon */}
+          <motion.svg
+            width="36" height="36" viewBox="0 0 24 24" fill="#977C3C"
+            animate={{ rotate: [0, 5, -5, 0] }}
+            transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+          >
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+          </motion.svg>
+
+          {/* Small star */}
+          <motion.svg
+            width="10" height="10" viewBox="0 0 24 24" fill="#c4a84d" opacity={0.4}
+            animate={{ scale: [1, 1.4, 1] }}
+            transition={{ duration: 2, repeat: Infinity, delay: 1 }}
+          >
+            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+          </motion.svg>
+
+          {/* Right star */}
+          <motion.svg
+            width="18" height="18" viewBox="0 0 24 24" fill="#977C3C" opacity={0.5}
+            animate={{ rotate: -360, scale: [1, 1.2, 1] }}
+            transition={{ rotate: { duration: 12, repeat: Infinity, ease: "linear" }, scale: { duration: 3, repeat: Infinity, delay: 1.5 } }}
+          >
+            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+          </motion.svg>
+        </motion.div>
+
+        {/* Glow under crescent */}
+        <motion.div
+          className="absolute top-10 left-1/2 -translate-x-1/2 w-20 h-6 rounded-full bg-[#977C3C]/10 blur-xl z-10"
+          animate={{ opacity: [0.3, 0.6, 0.3], scale: [1, 1.1, 1] }}
+          transition={{ duration: 3, repeat: Infinity }}
+        />
+
         {/* Logo */}
         <motion.img
           alt="شركة الوصل الوطنية"
