@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from "framer-motion";
 
 import splashLogo from "@/assets/splash-logo.png";
 import ShareDialog from "@/components/ShareDialog";
+import RamadanDecorations from "@/components/RamadanDecorations";
 
 const Index = () => {
   const [dialogOpen, setDialogOpen] = useState(false);
@@ -36,7 +37,8 @@ const Index = () => {
         )}
       </AnimatePresence>
 
-      <div className="min-h-screen bg-cream flex flex-col items-center justify-center px-4 text-center">
+      <RamadanDecorations />
+      <div className="min-h-screen bg-cream flex flex-col items-center justify-center px-4 text-center relative">
         {/* Logo */}
         <motion.img
           alt="شركة الوصل الوطنية"
