@@ -1,78 +1,97 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 
-import logo from "@/assets/logo.png";
+import splashLogo from "@/assets/splash-logo.png";
 import ShareDialog from "@/components/ShareDialog";
 
 const Index = () => {
   const [dialogOpen, setDialogOpen] = useState(false);
+  const [showSplash, setShowSplash] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setShowSplash(false), 4000);
+    return () => clearTimeout(timer);
+  }, []);
 
   return (
-    <div className="min-h-screen bg-cream flex flex-col items-center justify-center px-4 text-center">
-      {/* Logo */}
-      <motion.img
+    <>
+      <AnimatePresence>
+        {showSplash && (
+          <motion.div
+            className="fixed inset-0 z-50 flex items-center justify-center bg-white"
+            initial={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.6 }}
+          >
+            <motion.img
+              src={splashLogo}
+              alt="شركة الوصل الوطنية"
+              className="w-64 md:w-80 object-contain"
+              initial={{ scale: 0.8, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              transition={{ duration: 0.8, ease: "easeOut" }}
+            />
+          </motion.div>
+        )}
+      </AnimatePresence>
 
-        alt="شركة الوصل الوطنية"
-        className="w-56 h-56 md:w-72 md:h-72 object-contain -mb-2"
-        initial={{ scale: 0, rotate: -180 }}
-        animate={{ scale: 1, rotate: 0 }}
-        transition={{ type: "spring", damping: 15, stiffness: 100, delay: 0.2 }} src="/lovable-uploads/ed1f8f12-08d8-4ab8-a787-1527f15b4a6a.png" />
+      <div className="min-h-screen bg-cream flex flex-col items-center justify-center px-4 text-center">
+        {/* Logo */}
+        <motion.img
+          alt="شركة الوصل الوطنية"
+          className="w-56 h-56 md:w-72 md:h-72 object-contain -mb-2"
+          initial={{ scale: 0, rotate: -180 }}
+          animate={{ scale: 1, rotate: 0 }}
+          transition={{ type: "spring", damping: 15, stiffness: 100, delay: 0.2 }}
+          src="/lovable-uploads/ed1f8f12-08d8-4ab8-a787-1527f15b4a6a.png"
+        />
 
+        {/* Title */}
+        <motion.h1
+          className="text-4xl md:text-6xl font-black mb-3 bg-transparent text-[#ab9154]"
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.5, duration: 0.8 }}
+        >
+          رمضان كريم
+        </motion.h1>
 
-      {/* Title */}
-      <motion.h1
-        className="text-4xl md:text-6xl font-black mb-3 bg-transparent text-[#ab9154]"
-        initial={{ opacity: 0, y: 30 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.5, duration: 0.8 }}>
+        <motion.p
+          className="text-muted-foreground text-sm md:text-base mb-10 max-w-md"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.9, duration: 0.8 }}
+        >
+          نهنئكم بحلول شهر رمضان المبارك، أعاده الله عليكم بالخير واليمن والبركات
+        </motion.p>
 
-        رمضان كريم
-      </motion.h1>
+        {/* Buttons */}
+        <motion.div
+          className="flex flex-col sm:flex-row gap-4"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 1.1, duration: 0.8 }}
+        >
+          <button
+            onClick={() => setDialogOpen(true)}
+            className="rounded-2xl bg-primary px-8 py-4 text-lg font-bold text-primary-foreground gold-glow hover:scale-105 transition-transform"
+          >
+            شاركنا مشاعرك 🌙
+          </button>
 
-      
+          <Link
+            to="/messages"
+            className="rounded-2xl border-2 border-gold/30 bg-gold/10 px-8 py-4 text-lg font-bold text-gold-dark hover:bg-gold/20 transition-colors"
+          >
+            لوحة المشاعر
+          </Link>
+        </motion.div>
 
-
-
-
-
-
-
-
-      <motion.p
-        className="text-muted-foreground text-sm md:text-base mb-10 max-w-md"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 0.9, duration: 0.8 }}>
-
-        نهنئكم بحلول شهر رمضان المبارك، أعاده الله عليكم بالخير واليمن والبركات
-      </motion.p>
-
-      {/* Buttons */}
-      <motion.div
-        className="flex flex-col sm:flex-row gap-4"
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 1.1, duration: 0.8 }}>
-
-        <button
-          onClick={() => setDialogOpen(true)}
-          className="rounded-2xl bg-primary px-8 py-4 text-lg font-bold text-primary-foreground gold-glow hover:scale-105 transition-transform">
-
-          شاركنا مشاعرك 🌙
-        </button>
-
-        <Link
-          to="/messages"
-          className="rounded-2xl border-2 border-gold/30 bg-gold/10 px-8 py-4 text-lg font-bold text-gold-dark hover:bg-gold/20 transition-colors">
-
-           لوحة  المشاعر 
-        </Link>
-      </motion.div>
-
-      <ShareDialog open={dialogOpen} onClose={() => setDialogOpen(false)} />
-    </div>);
-
+        <ShareDialog open={dialogOpen} onClose={() => setDialogOpen(false)} />
+      </div>
+    </>
+  );
 };
 
 export default Index;
