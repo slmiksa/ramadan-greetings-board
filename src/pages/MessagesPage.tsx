@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState, useCallback, useRef } from "react";
 import { Link } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { getApprovedMessages, RamadanMessage } from "@/lib/messages";
@@ -42,10 +42,36 @@ const MessageCard = ({ msg, index }: { msg: RamadanMessage; index: number }) => 
 const MessagesPage = () => {
   const [messages, setMessages] = useState<RamadanMessage[]>([]);
   const [currentPage, setCurrentPage] = useState(0);
+  const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     getApprovedMessages().then(setMessages).catch(console.error);
   }, []);
+
+  // Auto-scroll slowly when page content loads
+  useEffect(() => {
+    if (messages.length === 0) return;
+    const timer = setTimeout(() => {
+      const el = containerRef.current;
+      if (!el) return;
+      const scrollHeight = el.scrollHeight - el.clientHeight;
+      if (scrollHeight <= 0) return;
+      const duration = Math.max(scrollHeight * 15, 5000); // ~15ms per pixel, min 5s
+      const start = performance.now();
+      const animate = (now: number) => {
+        const elapsed = now - start;
+        const progress = Math.min(elapsed / duration, 1);
+        // easeInOut for smooth feel
+        const ease = progress < 0.5
+          ? 2 * progress * progress
+          : 1 - Math.pow(-2 * progress + 2, 2) / 2;
+        el.scrollTo(0, ease * scrollHeight);
+        if (progress < 1) requestAnimationFrame(animate);
+      };
+      requestAnimationFrame(animate);
+    }, 800);
+    return () => clearTimeout(timer);
+  }, [messages, currentPage]);
 
   const totalPages = Math.max(1, Math.ceil(messages.length / ITEMS_PER_PAGE));
 
@@ -82,7 +108,7 @@ const MessagesPage = () => {
   }, [currentPage, totalPages]);
 
   return (
-    <div className="min-h-screen bg-cream relative">
+    <div ref={containerRef} className="min-h-screen bg-cream relative overflow-y-auto h-screen">
       <RamadanDecorations />
       {/* Header */}
       <div className="text-center py-8">
