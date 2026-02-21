@@ -56,7 +56,7 @@ const MessagesPage = () => {
       if (!el) return;
       const scrollHeight = el.scrollHeight - el.clientHeight;
       if (scrollHeight <= 0) return;
-      const duration = Math.max(scrollHeight * 15, 5000); // ~15ms per pixel, min 5s
+      const duration = Math.max(scrollHeight * 30, 8000); // ~30ms per pixel, min 8s
       const start = performance.now();
       const animate = (now: number) => {
         const elapsed = now - start;
